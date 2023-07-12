@@ -5,9 +5,9 @@ const router = express.Router();
 
 
 
-router.get("/categories", getAllUnits);
+router.get("/units", getAllUnits);
 router.delete("/delete/:id", deleteUnit);
-router.patch("/update/:id", updateUnit);
+router.post("/update/:id", updateUnit);
 router.post("/new", createUnit);
 
 
