@@ -20,11 +20,13 @@ const updateCategory = async (req, res) => {
       { categoryName: categoryName }
     );
   } catch (err) {
+    console.log(err)
     return res
       .status(402)
       .json({ message: "Could not update the category, please try again" });
   }
   if (category) {
+    console.log("yeah xdd")
     return res.status(201).json({ message: "date have been updated" });
   }
   return res.status(402).json({ message: "No match with this category name" });

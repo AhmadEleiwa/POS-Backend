@@ -12,12 +12,13 @@ const getAllUnits = async (req, res) => {
 
 const updateUnit = async (req, res) => {
   const { id } = req.params;
-  const { payload } = req.body;
+  const { unitOfMeasureName, baseUnitOfMeasure, conversionFactor } = req.body;
+  console.log(unitOfMeasureName);
   let unit;
   try {
     unit = await UnitOfMeasure.findOneAndUpdate(
       { unitOfMeasureName: id },
-      payload
+      { unitOfMeasureName, baseUnitOfMeasure, conversionFactor }
     );
   } catch (err) {
     return res
@@ -32,9 +33,10 @@ const updateUnit = async (req, res) => {
 
 const deleteUnit = async (req, res) => {
   const { id } = req.params;
+  console.log(id);
   let unit;
   try {
-    unit = await UnitOfMeasure.findOneAndDelete({ categoryName: id });
+    unit = await UnitOfMeasure.findOneAndDelete({ unitOfMeasureName: id });
   } catch (err) {
     return res
       .status(402)
@@ -47,10 +49,11 @@ const deleteUnit = async (req, res) => {
 };
 
 const createUnit = async (req, res) => {
-  const { unitOfMeaureName, baseUnitOfMeaure, conversionFactor } = req.body;
+  const { unitOfMeasureName, baseUnitOfMeasure, conversionFactor } = req.body;
+  console.log(unitOfMeasureName, conversionFactor);
   let unit;
   try {
-    unit = await UnitOfMeasure.findOne({ unitOfMeaureName: unitOfMeaureName });
+    unit = await UnitOfMeasure.findOne({ unitOfMeasureName: unitOfMeasureName });
   } catch (err) {
     return res
       .status(402)
@@ -58,9 +61,9 @@ const createUnit = async (req, res) => {
   }
   if (!unit) {
     unit = new UnitOfMeasure({
-      unitOfMeaureName,
-      baseUnitOfMeaure,
-      conversionFactor,
+      unitOfMeasureName: unitOfMeasureName,
+      baseUnitOfMeasure: baseUnitOfMeasure,
+      conversionFactor: conversionFactor,
     });
     unit.save();
     return res.status(201).json({ message: "New unit have been created" });
